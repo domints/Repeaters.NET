@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-repeaters-net-vue
+spec:
+  rules:
+  - host: repeaters.dszymanski.pl
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: svc-repeaters-net-vue
+            port:
+              number: 80
+  ingressClassName: nginx

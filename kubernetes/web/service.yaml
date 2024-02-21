@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-repeaters-net-vue
+spec:
+  selector:
+    app.kubernetes.io/name: repeaters-net-vue
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

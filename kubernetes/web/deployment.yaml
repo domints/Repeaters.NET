@@ -1,0 +1,6 @@
+spec:
+  template:
+    spec:
+      containers:
+        - name: repeaters-net-vue
+          image: ghcr.io/domints/repeaters.net-vue:master
