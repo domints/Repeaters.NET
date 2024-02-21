@@ -33,9 +33,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js 20.x
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        working-directory: ./Web
         node-version: 20.x
         cache: 'npm'
         cache-dependency-path: 'Web/package-lock.json'
@@ -68,6 +67,7 @@ jobs:
         working-directory: ./Web
 
     steps:
+      - uses: actions/checkout@v3
       - name: Set the Kubernetes context
         uses: azure/k8s-set-context@v2
         with:
