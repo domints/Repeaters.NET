@@ -39,6 +39,5 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: "{{defaultContext}}:Web"
-        platforms: linux/amd64,linux/arm64
         push: true
         tags: domints/repeaters-net:latest
