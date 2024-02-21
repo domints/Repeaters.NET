@@ -16,6 +16,10 @@ on:
       - Web/**
       - .github/workflows/node.js.yml
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}-vue
+
 jobs:
   build:
 
@@ -35,9 +39,21 @@ jobs:
         cache-dependency-path: 'Web/package-lock.json'
     - run: npm ci
     - run: npm run build --if-present
-    - name: Build Docker image and push to GHCR
+    - name: Log in to the Container registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Extract Docker metadata
+      id: meta
+      uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+    - name: Build and push
       uses: docker/build-push-action@v5
       with:
         context: ./Web
-        push: true
-        tags: domints/repeaters-net:latest
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
