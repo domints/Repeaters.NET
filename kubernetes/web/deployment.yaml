@@ -18,3 +18,5 @@ spec:
         image: ghcr.io/domints/repeaters.net-vue:master
         ports:
         - containerPort: 80
+      nodeSelector:
+        kubernetes.io/arch: amd64
