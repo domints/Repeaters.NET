@@ -11,12 +11,14 @@ on:
     paths:
       - Web/**
       - .github/workflows/node.js.yml
+      - kubernetes/web/**
     
   pull_request:
     branches: [ "master" ]
     paths:
       - Web/**
       - .github/workflows/node.js.yml
+      - kubernetes/web/**
 
 env:
   REGISTRY: ghcr.io
