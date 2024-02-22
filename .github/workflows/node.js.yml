@@ -89,4 +89,3 @@ jobs:
             kubernetes/web/service.yaml
           images: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:master
-            skip-tls-verify: true
