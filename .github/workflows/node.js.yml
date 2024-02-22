@@ -76,9 +76,12 @@ jobs:
           method: service-account
           k8s-url: ${{ vars.KUBERNETES_ADDRESS }}
           k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+      - name: test connection
+        run: curl https://84.235.236.3:6443 -k
       - name: Deploy to the Kubernetes cluster
         uses: azure/k8s-deploy@v1
         with:
+          action: deploy
           namespace: default
           manifests: |
             kubernetes/web/deployment.yaml
