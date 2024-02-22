@@ -1,6 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: repeaters-net-vue
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: repeaters-net-vue
   template:
+    metadata:
+      labels:
+        app: repeaters-net-vue
+        app.kubernetes.io/name: repeaters-net-vue
     spec:
       containers:
-        - name: repeaters-net-vue
-          image: ghcr.io/domints/repeaters.net-vue:master
+      - name: repeaters-net-vue-container
+        image: ghcr.io/domints/repeaters.net-vue:master
+        ports:
+        - containerPort: 80
