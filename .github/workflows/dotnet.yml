@@ -64,7 +64,7 @@ jobs:
         tags: |
           type=ref,event=tag
           type=ref,event=branch
-          type=sha
+          type=sha,format=long
           type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
     - name: Build and push
       uses: docker/build-push-action@v5
@@ -100,4 +100,4 @@ jobs:
             kubernetes/api/ingress.yaml
             kubernetes/api/service.yaml
           images: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
