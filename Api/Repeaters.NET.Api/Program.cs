@@ -1,9 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using Repeaters.NET.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<RepeatersContext>(options =>
+    options.UseMySQL($"server={builder.Configuration["Database:Host"]};uid={builder.Configuration["Database:Username"]};pwd={builder.Configuration["Database:Password"]};database={builder.Configuration["Database:Name"]}"));
 
 var app = builder.Build();
 
@@ -33,6 +39,11 @@ app.MapGet("/api/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
+
+app.MapGet("/api/checkdb", (RepeatersContext dbContext) =>
+{
+    return dbContext.Database.ExecuteSqlRawAsync("SELECT version()");
+});
 
 app.Run();
 

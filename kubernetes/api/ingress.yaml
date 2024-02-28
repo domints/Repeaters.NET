@@ -18,6 +18,13 @@ spec:
             name: repeaters-net-api
             port:
               number: 80
+      - path: /swagger
+        pathType: Prefix
+        backend:
+          service:
+            name: repeaters-net-api
+            port:
+              number: 80
   
   tls:
     - secretName: repeaters-net-tls

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repeaters.NET.Api", "Repeaters.NET.Api\Repeaters.NET.Api.csproj", "{06020CB7-82B6-4A82-8C06-A82A6DFD0CDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repeaters.NET.Data", "Repeaters.NET.Data\Repeaters.NET.Data.csproj", "{2062A920-045A-4C7D-9C9B-CC5CD84A5F72}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{06020CB7-82B6-4A82-8C06-A82A6DFD0CDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06020CB7-82B6-4A82-8C06-A82A6DFD0CDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06020CB7-82B6-4A82-8C06-A82A6DFD0CDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2062A920-045A-4C7D-9C9B-CC5CD84A5F72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2062A920-045A-4C7D-9C9B-CC5CD84A5F72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2062A920-045A-4C7D-9C9B-CC5CD84A5F72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2062A920-045A-4C7D-9C9B-CC5CD84A5F72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

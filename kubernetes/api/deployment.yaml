@@ -21,3 +21,20 @@ spec:
         - containerPort: 5000
       nodeSelector:
         kubernetes.io/arch: arm64
+      env:
+        - name: Database__Username
+          valueFrom:
+            secretKeyRef:
+              name: repeaters-database
+              key: username
+        - name: Database__Password
+          valueFrom:
+            secretKeyRef:
+              name: repeaters-database
+              key: password
+        - name: Database__Host
+          value: mariadb-1709158373
+        - name: Database__Name
+          value: repeaters
+        - name: DOTNET_ENVIRONMENT
+          value: Development
