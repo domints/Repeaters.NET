@@ -19,9 +19,7 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
-      nodeSelector:
-        kubernetes.io/arch: arm64
-      env:
+        env:
         - name: Database__Username
           valueFrom:
             secretKeyRef:
@@ -38,3 +36,5 @@ spec:
           value: repeaters
         - name: DOTNET_ENVIRONMENT
           value: Development
+      nodeSelector:
+        kubernetes.io/arch: arm64
