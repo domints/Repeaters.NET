@@ -61,6 +61,11 @@ jobs:
       uses: docker/metadata-action@v5
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        tags: |
+          type=ref,event=tag
+          type=ref,event=branch
+          type=sha
+          type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
@@ -95,4 +100,4 @@ jobs:
             kubernetes/api/ingress.yaml
             kubernetes/api/service.yaml
           images: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:master
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: repeaters-net-api-container
-        image: ghcr.io/domints/repeaters.net-api:master
+        image: ghcr.io/domints/repeaters.net-api:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
