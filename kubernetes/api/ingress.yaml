@@ -2,6 +2,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-repeaters-net-api
+  annotations:
+    spec.ingressClassName: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-https@kubernetescrd
 spec:
   rules:
   - host: repeaters.dszymanski.pl
@@ -14,3 +18,8 @@ spec:
             name: repeaters-net-api
             port:
               number: 80
+  
+  tls:
+    - secretName: repeaters-net-tls
+      hosts:
+        - repeaters.dszymanski.pl
