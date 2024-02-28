@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: repeaters-net-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: repeaters-net-api
+  template:
+    metadata:
+      labels:
+        app: repeaters-net-api
+        app.kubernetes.io/name: repeaters-net-api
+    spec:
+      containers:
+      - name: repeaters-net-api-container
+        image: ghcr.io/domints/repeaters.net-api:master
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+      nodeSelector:
+        kubernetes.io/arch: arm64

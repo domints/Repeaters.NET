@@ -6,15 +6,26 @@ name: .NET
 on:
   push:
     branches: [ "master" ]
+    tags:
+      - 'v*'
     paths:
       - Api/**
+      - .github/workflows/dotnet.yml
+      - kubernetes/api/**
   pull_request:
     branches: [ "master" ]
     paths:
       - Api/**
+      - .github/workflows/dotnet.yml
+      - kubernetes/api/**
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}-api
 
 jobs:
   build:
+    permissions: write-all
 
     runs-on: ubuntu-latest
     defaults:
@@ -30,3 +41,53 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - name: Publish x64
+      run: dotnet publish -c Release --no-restore -a x64 -o ./out/amd64
+    - name: Publish arm64
+      run: dotnet publish -c Release --no-restore -a arm64 -o ./out/arm64
+    - name: Log in to the Container registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Extract Docker metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        context: ./Api
+        platforms: linux/amd64,linux/arm64
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Api
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set the Kubernetes context
+        uses: azure/k8s-set-context@v2
+        with:
+          method: service-account
+          k8s-url: ${{ vars.KUBERNETES_ADDRESS }}
+          k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+      - name: Deploy to the Kubernetes cluster
+        uses: azure/k8s-deploy@v1
+        with:
+          action: deploy
+          namespace: default
+          manifests: |
+            kubernetes/api/deployment.yaml
+            kubernetes/api/ingress.yaml
+            kubernetes/api/service.yaml
+          images: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:master
