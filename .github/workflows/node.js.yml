@@ -84,8 +84,12 @@ jobs:
           method: service-account
           k8s-url: ${{ vars.KUBERNETES_ADDRESS }}
           k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+      - name: Set Image Identifier
+        run: echo "IMAGE=${{ env.REGISTRY }}/${IMG_NAME@L}:sha-${{ github.sha }}" >> $GITHUB_OUTPUT
+        env:
+          IMG_NAME: ${{ env.IMAGE_NAME }}
       - name: Show me the image name
-        run: echo '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}'
+        run: echo '${IMAGE}'
       - name: Deploy to the Kubernetes cluster
         uses: azure/k8s-deploy@v1
         with:
@@ -97,4 +101,4 @@ jobs:
             kubernetes/web/service.yaml
           strategy: 'basic'
           images: |
-            '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}'
+            '${IMAGE}'
