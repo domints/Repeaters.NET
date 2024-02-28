@@ -17,6 +17,6 @@ spec:
       - name: repeaters-net-vue-container
         image: ghcr.io/domints/repeaters.net-vue:master
         ports:
-        - containerPort: 80
+        - containerPort: 3000
       nodeSelector:
         kubernetes.io/arch: amd64
