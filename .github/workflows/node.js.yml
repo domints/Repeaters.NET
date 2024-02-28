@@ -42,6 +42,9 @@ jobs:
         cache-dependency-path: 'Web/package-lock.json'
     - run: npm ci
     - run: npm run build --if-present
+    - name: Make image lowercase
+      run: |
+        echo "IMAGE_NAME=${GITHUB_REPOSITORY@L}" >> $GITHUB_OUTPUT
     - name: Log in to the Container registry
       uses: docker/login-action@v3
       with:
