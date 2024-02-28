@@ -16,6 +16,7 @@ spec:
       containers:
       - name: repeaters-net-vue-container
         image: ghcr.io/domints/repeaters.net-vue:master
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
       nodeSelector:
