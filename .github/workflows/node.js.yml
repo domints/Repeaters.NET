@@ -91,4 +91,4 @@ jobs:
             kubernetes/web/ingress.yaml
             kubernetes/web/service.yaml
           images: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+            '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}'
