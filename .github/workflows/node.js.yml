@@ -90,5 +90,6 @@ jobs:
             kubernetes/web/deployment.yaml
             kubernetes/web/ingress.yaml
             kubernetes/web/service.yaml
+          strategy: 'basic'
           images: |
             '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}'
